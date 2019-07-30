@@ -50,6 +50,7 @@ def find_max_clique(graph: Graph):
                     next_vert_set.append(v)
                     next_e_idx = graph.edges[next_e_idx].next_id
                 next_vert_set = set(next_vert_set)
+                print(vert_set, next_vert_set)
                 if not vert_set.difference(next_vert_set):
                     memory[mask ^ (1 << (next_vert - 1))] = 1
                     num_ones = number_of_ones(mask ^ (1 << (next_vert - 1)))
