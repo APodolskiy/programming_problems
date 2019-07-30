@@ -47,10 +47,9 @@ def find_max_clique(graph: Graph):
                 next_e_idx = graph.vertices[next_vert]
                 while next_e_idx != -1:
                     v = graph.edges[next_e_idx].to
-                    next_vert_set.append(v)
+                    next_vert_set.append(v - 1)
                     next_e_idx = graph.edges[next_e_idx].next_id
                 next_vert_set = set(next_vert_set)
-                print(vert_set, next_vert_set)
                 if not vert_set.difference(next_vert_set):
                     memory[mask ^ (1 << (next_vert - 1))] = 1
                     num_ones = number_of_ones(mask ^ (1 << (next_vert - 1)))
@@ -58,7 +57,6 @@ def find_max_clique(graph: Graph):
                         max_clique = num_ones
                         max_clique_set = (mask ^ (1 << (next_vert - 1)))
             e_idx = graph.edges[e_idx].next_id
-    print(memory)
     return max_clique, max_clique_set
 
 
@@ -78,3 +76,23 @@ if __name__ == '__main__':
         graph.add_edge(from_vert, to_vert)
         graph.add_edge(to_vert, from_vert)
     print(find_max_clique(graph))
+
+    with open('problems/friends.in', 'r') as fp:
+        n, m = [int(s) for s in fp.readline().strip().split()]
+        graph = Graph(n)
+        for _ in range(m):
+            v1, v2 = [int(s) for s in fp.readline().strip().split()]
+            graph.add_edge(v1, v2)
+            graph.add_edge(v2, v1)
+    length, clique = find_max_clique(graph)
+    print(length, bin(clique))
+
+    with open('problems/friends2.in', 'r') as fp:
+        n, m = [int(s) for s in fp.readline().strip().split()]
+        graph = Graph(n)
+        for _ in range(m):
+            v1, v2 = [int(s) for s in fp.readline().strip().split()]
+            graph.add_edge(v1, v2)
+            graph.add_edge(v2, v1)
+    length, clique = find_max_clique(graph)
+    print(length, bin(clique))
