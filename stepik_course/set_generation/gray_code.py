@@ -20,6 +20,26 @@ def generate_gray_codes_iter(n: int):
     print(codes)
 
 
+def generate_k_dim_gray_codes(n: int, k: int):
+    arr = [0 for _ in range(n)]
+    print(arr)
+    direct = [1 for _ in range(n)]
+
+    while True:
+        ind = n - 1
+        while ind >= 0:
+            if (arr[ind] == 0 and direct[ind] == 0) or (arr[ind] == k - 1 and direct[ind] == 1):
+                # Change direction
+                direct[ind] = (direct[ind] + 1) % 2
+            else:
+                break
+            ind -= 1
+        if ind < 0:
+            break
+        arr[ind] += 2*direct[ind] - 1
+        print(arr)
+
+
 if __name__ == '__main__':
     from pprint import pprint
     pprint(generate_gray_codes_rec(2))
@@ -28,3 +48,6 @@ if __name__ == '__main__':
 
     generate_gray_codes_iter(2)
     generate_gray_codes_iter(3)
+    generate_gray_codes_iter(4)
+
+    generate_k_dim_gray_codes(3, 3)
