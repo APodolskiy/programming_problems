@@ -41,6 +41,23 @@ def generate_subsets_size_k(n: int, k: int):
         print_subset()
 
 
+def generate_subsets_size_k_rec(n: int, k: int):
+    print("Recursively generating subsets of size {} for the set of size {}".format(k, n))
+    if k == 0:
+        return []
+    res = [-1]*k
+
+    def generate(idx: int, cur_size: int):
+        if cur_size == k:
+            print(res)
+            return
+        for i in range(idx + 1, n - k + cur_size + 1):
+            res[cur_size] = i
+            generate(idx=i, cur_size=cur_size + 1)
+
+    generate(-1, 0)
+
+
 if __name__ == '__main__':
     generate_subsets(3)
     generate_subsets(4)
@@ -48,3 +65,7 @@ if __name__ == '__main__':
     generate_subsets_size_k(4, 3)
     generate_subsets_size_k(4, 4)
     generate_subsets_size_k(3, 0)
+    generate_subsets_size_k_rec(3, 2)
+    generate_subsets_size_k_rec(4, 3)
+    generate_subsets_size_k_rec(4, 4)
+    generate_subsets_size_k_rec(3, 0)
