@@ -1,4 +1,5 @@
 from random import randint
+from typing import Tuple
 
 
 class ListNode:
@@ -41,10 +42,15 @@ def add_two_numbers(num1: ListNode, num2: ListNode) -> ListNode:
     res = None
     trans_value = 0
     last_node = res
-    while num1 is not None and num2 is not None:
-        sum_digit = num1.value + num2.value + trans_value
-        new_digit, trans_value = sum_digit % 10, sum_digit // 10
+
+    def add_digits(val1: int, val2: int = 0, val3: int = 0) -> Tuple[ListNode, int]:
+        sum_digit = val1 + val2 + val3
+        new_digit, val3 = sum_digit % 10, sum_digit // 10
         new_node = ListNode(value=new_digit)
+        return new_node, val3
+
+    while num1 is not None and num2 is not None:
+        new_node, trans_value = add_digits(num1.value, num2.value, trans_value)
         if last_node is not None:
             last_node.next = new_node
         else:
@@ -54,17 +60,13 @@ def add_two_numbers(num1: ListNode, num2: ListNode) -> ListNode:
         num2 = num2.next
 
     while num1 is not None:
-        sum_digit = num1.value + trans_value
-        new_digit, trans_value = sum_digit % 10, sum_digit // 10
-        new_node = ListNode(value=new_digit)
+        new_node, trans_value = add_digits(num1.value, trans_value)
         last_node.next = new_node
         last_node = new_node
         num1 = num1.next
 
     while num2 is not None:
-        sum_digit = num2.value + trans_value
-        new_digit, trans_value = sum_digit % 10, sum_digit // 10
-        new_node = ListNode(value=new_digit)
+        new_node, trans_value = add_digits(num2.value, trans_value)
         last_node.next = new_node
         last_node = new_node
         num2 = num2.next
