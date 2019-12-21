@@ -39,6 +39,7 @@ def generate_brackets_iteratively(n: int):
 
 
 if __name__ == '__main__':
+    generate_brackets(2)
     generate_brackets(3)
     generate_brackets(4)
     generate_brackets_iteratively(3)
