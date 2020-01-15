@@ -39,10 +39,28 @@ def build_auxiliary_dp(n: int) -> List[List[int]]:
 
 
 def bracket_with_num(n: int, k: int):
-    pass
+    dp = build_auxiliary_dp(2*n)
+    assert k <= dp[2*n][0]
+    bracket_seq = []
+    depth = 0
+
+    for idx in range(2*n - 1, -1, -1):
+        if (depth <= n) and (dp[idx][depth + 1] >= k):
+            bracket_seq.append('(')
+            depth += 1
+        else:
+            bracket_seq.append(')')
+            if depth + 1 <= n:
+                k -= dp[idx][depth + 1]
+            depth -= 1
+    return ''.join(bracket_seq)
 
 
 if __name__ == '__main__':
     print(find_bracket_num('(())'))
     print(find_bracket_num('()()'))
     print(find_bracket_num('(())()'))
+
+    print(bracket_with_num(3, 1))
+    print(bracket_with_num(3, 2))
+    print(bracket_with_num(2, 2))
